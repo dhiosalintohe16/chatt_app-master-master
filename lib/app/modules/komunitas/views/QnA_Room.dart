@@ -19,17 +19,17 @@ class QnARoom extends StatefulWidget {
 class _QnARoom extends State<QnARoom> {
   final authC = Get.find<AuthController>();
   String? _replyCommentID;
-  String? _replyUser;
+  // String? _replyUser;
   // String? _replyCommentID;
 
   final TextEditingController _msgTextController = new TextEditingController();
   final FocusNode _msgFocusNode = new FocusNode();
 
-  void _replykomen(String replyTo, replyCommentID) async {
-    _replyCommentID = replyCommentID;
-    FocusScope.of(context).requestFocus(_msgFocusNode);
-    _msgTextController.text = '$replyTo';
-  }
+  // void _replykomen(String replyTo, replyCommentID) async {
+  //   _replyCommentID = replyCommentID;
+  //   FocusScope.of(context).requestFocus(_msgFocusNode);
+  //   _msgTextController.text = '$replyTo';
+  // }
 
 
 // void _replyComment (String replyTo, String commentID) async {
@@ -50,7 +50,7 @@ class _QnARoom extends State<QnARoom> {
           toolbarHeight: 80,
           backgroundColor: Colors.white,
           title: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
                 children: [
@@ -110,7 +110,7 @@ class _QnARoom extends State<QnARoom> {
                 .collection("komunitas")
                 .doc(widget.postData["postID"])
                 .collection("comment")
-                .orderBy("lasttimeComment", descending: true)
+                .orderBy("lasttimeComment", descending: false)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) return LinearProgressIndicator();
@@ -271,7 +271,7 @@ class _QnARoom extends State<QnARoom> {
                         style: TextStyle(
                           fontStyle: FontStyle.normal,
                           color: Colors.grey.shade300,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                           fontSize: 12,
                         ),
                       ),
@@ -283,9 +283,9 @@ class _QnARoom extends State<QnARoom> {
                           )),
                     ],
                   ),
-                  width: size.width - 
+                  width: size.width - 100,
                   // 150,
-                      (data['toUserID'] == data['nama'] ? 140 : 150),
+                      // (data['toUserID'] == data['nama'] ? 140 : 150),
                   decoration: BoxDecoration(
                     color: Color(0xFF007869),
                     // border:
@@ -303,7 +303,7 @@ class _QnARoom extends State<QnARoom> {
                   child: Container(
                     width: 200,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           KomunitasController()
@@ -313,38 +313,38 @@ class _QnARoom extends State<QnARoom> {
                             color: Colors.black,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '${data['commnetlike']}',
-                              style: GoogleFonts.averageSans(
-                                fontSize: 12,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              'Like',
-                              style: GoogleFonts.averageSans(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            _replykomen(data['nama'], data['commentID']);
-                          },
-                          child: Text(
-                            'Reply',
-                            style: GoogleFonts.averageSans(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[700],
-                            ),
-                          ),
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Text(
+                        //       '${data['commnetlike']}',
+                        //       style: GoogleFonts.averageSans(
+                        //         fontSize: 12,
+                        //         color: Colors.black,
+                        //       ),
+                        //     ),
+                        //     Text(
+                        //       'Like',
+                        //       style: GoogleFonts.averageSans(
+                        //         fontSize: 12,
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.grey[700],
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     _replykomen(data['nama'], data['commentID']);
+                        //   },
+                        //   child: Text(
+                        //     'Reply',
+                        //     style: GoogleFonts.averageSans(
+                        //       fontSize: 12,
+                        //       fontWeight: FontWeight.bold,
+                        //       color: Colors.grey[700],
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -353,11 +353,11 @@ class _QnARoom extends State<QnARoom> {
                   )
             ],
           ),
-          Positioned(
-            bottom: 12,
-            right: 2,
-            child: Icon(Icons.favorite, size: 20, color: Colors.red[700]),
-          ) // Card
+          // Positioned(
+          //   bottom: 12,
+          //   right: 2,
+          //   child: Icon(Icons.favorite, size: 20, color: Colors.red[700]),
+          // ) // Card
         ],
       ),
     );
