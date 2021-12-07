@@ -211,14 +211,14 @@ class _QnARoom extends State<QnARoom> {
                   onSubmitted: _handleSubmitted,
                   decoration: new InputDecoration(
                       filled: true,
-                      fillColor: Color(0xFF008269).withOpacity(0.2),
+                      fillColor: Colors.grey[100],
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(50),
+                        borderSide: BorderSide(color: Color(0xFF008269), width: 1),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: "Write a comment",
                       hintStyle: TextStyle(color: Colors.black)),
@@ -270,7 +270,7 @@ class _QnARoom extends State<QnARoom> {
                         data['nama'],
                         style: TextStyle(
                           fontStyle: FontStyle.normal,
-                          color: Colors.grey.shade300,
+                          color: Colors.black,
                           fontWeight: FontWeight.w700,
                           fontSize: 12,
                         ),
@@ -279,7 +279,7 @@ class _QnARoom extends State<QnARoom> {
                           maxLines: null,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.white,
+                            color: Colors.black,
                           )),
                     ],
                   ),
@@ -287,14 +287,16 @@ class _QnARoom extends State<QnARoom> {
                   // 150,
                       // (data['toUserID'] == data['nama'] ? 140 : 150),
                   decoration: BoxDecoration(
-                    color: Color(0xFF007869),
-                    // border:
-                    // Border.all(color: Colors.pink.shade200),
-                    // borderRadius: BorderRadius.only(
-                    //   topLeft: Radius.circular(5),
-                    //   topRight: Radius.circular(5),
-                    //   bottomLeft: Radius.circular(5),
-                    // ),
+                    color: Colors.grey[100],
+                    border:
+                    Border.all(color: Color(0xFF008269), width: 1),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5),
+                      bottomLeft: Radius.circular(5),
+                      
+                    ),
+                    
                   ),
                 ),
                 Padding(

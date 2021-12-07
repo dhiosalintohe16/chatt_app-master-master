@@ -225,7 +225,7 @@ class KomunitasView extends GetView<KomunitasController> {
                     ),
                     Container(
                       child: IconButton(
-                        padding: EdgeInsets.only(left: Get.width * 0.045),
+                        padding: EdgeInsets.only(left: Get.width * 0.025),
                         onPressed: () {},
                         icon: Icon(
                           Icons.notifications,
