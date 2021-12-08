@@ -21,8 +21,10 @@ import '../controllers/komunitas_controller.dart';
 
 class KomunitasView extends GetView<KomunitasController> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final TextEditingController search = TextEditingController();
   final authC = Get.find<AuthController>();
   final control = Get.put(KomunitasController());
+  String query = 'cabe';
  
 
   @override
@@ -32,10 +34,10 @@ class KomunitasView extends GetView<KomunitasController> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => QnARoom(postData: data)));
   }
   
-    void _updateLikeCount(DocumentSnapshot data) async {
-      await PertanyaanController().jumlhLike(data);
-      await PertanyaanController().likeToPost(data['postID']);
-    }
+    // void _updateLikeCount(DocumentSnapshot data) async {
+    //   await PertanyaanController().jumlhLike(data);
+    //   await PertanyaanController().likeToPost(data['postID']);
+    // }
 
 
   Widget _listTile(DocumentSnapshot data) {
@@ -129,23 +131,23 @@ class KomunitasView extends GetView<KomunitasController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                             Row(
-                        children: [
-                          GestureDetector(
-                            onTap: ()=>_updateLikeCount(data),
-                            child: Icon(
-                              Icons.favorite_border,
-                              color: Colors.black,
-                            ),
-                          ),
-                          data['postlike'] != 0 ?
-                          Text(
-                            '${data['postlike']}',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w500),
-                          ):Container(),
-                        ],
-                      ),
+                      //        Row(
+                      //   children: [
+                      //     GestureDetector(
+                      //       onTap: ()=>_updateLikeCount(data),
+                      //       child: Icon(
+                      //         Icons.favorite_border,
+                      //         color: Colors.black,
+                      //       ),
+                      //     ),
+                      //     data['postlike'] != 0 ?
+                      //     Text(
+                      //       '${data['postlike']}',
+                      //       style: TextStyle(
+                      //           fontSize: 17, fontWeight: FontWeight.w500),
+                      //     ):Container(),
+                      //   ],
+                      // ),
                       SizedBox(
                         width: 10,
                       ),
@@ -204,6 +206,11 @@ class KomunitasView extends GetView<KomunitasController> {
                       width: Get.width * 0.8,
                       height: 50,
                       child: TextField(
+                        controller: search,
+                        onSubmitted: _searching,
+                        // onChanged: (String text){
+                         
+                        // },
                         cursorColor: Color(0xFF008269),
                         decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -251,7 +258,7 @@ class KomunitasView extends GetView<KomunitasController> {
               return snapshot.data!.docs.length > 0
                   ? ListView(
                       shrinkWrap: true,
-                      children: snapshot.data!.docs.map(_listTile).toList(),
+                      children: snapshot.data!.docs.map(searching).toList(),
                     )
                   : Container(
                       color: Colors.amber,
@@ -269,8 +276,58 @@ class KomunitasView extends GetView<KomunitasController> {
                 
 
   }
+  Widget searching(DocumentSnapshot data) {
+    return StreamBuilder<QuerySnapshot>(
+        stream:
+            firestore.collection('komunitas').snapshots().asBroadcastStream(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            if (snapshot.data!.docs
+                .where((QueryDocumentSnapshot<Object?> element) =>
+                    element['isiChat']
+                        .toString()
+                        .toLowerCase()
+                        .contains(query.toLowerCase()))
+                .isEmpty){
+                  return Center(child: Text('no data'),);
+                }
+              return ListView(
+                shrinkWrap: true,
+                children: [
+                  ...snapshot.data!.docs
+                      .where((DocumentSnapshot<Object?> element) =>
+                          element['isiChat']
+                              .toString()
+                              .toLowerCase()
+                              .contains(query.toLowerCase()))
+                      .map((DocumentSnapshot<Object?> data) {
+                    final String nama = data['nama'];
+                    final String chat = data['isiChat'];
+                    // print('ini text editingggnayaaaaa $search');
+
+                    return ListTile(
+                      title: Text(nama),
+                      subtitle: Text(chat),
+                    );
+                  })
+                ],
+              );
+          }
+        });
+  }
+
+  void _searching(String text){
+
+    query = search.text;
+    
+  }
+  
   
   
   }
+
+
   
 
