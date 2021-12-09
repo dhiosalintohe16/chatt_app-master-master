@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
  final authc = Get.put(AuthController(), permanent: true );
 
   @override
+  
+
   Widget build(BuildContext context) {
         
         // return  GetMaterialApp(

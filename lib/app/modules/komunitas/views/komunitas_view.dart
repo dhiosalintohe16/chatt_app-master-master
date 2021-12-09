@@ -67,7 +67,7 @@ class _KomunitasViewState extends State<KomunitasView> {
                       Padding(
                           padding: const EdgeInsets.all(8.0),
                           child:  ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(50),
                                 child: 
                                 Container(height: 60,width: 60,
                                   child: Image.network(
